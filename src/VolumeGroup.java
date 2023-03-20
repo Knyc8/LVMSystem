@@ -8,6 +8,7 @@ public class VolumeGroup extends Volume{
     {
         super();
         name = n;
+        pvList = new ArrayList<>();
     }
 
     public ArrayList<PhysicalVolume> getPvList() {

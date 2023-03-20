@@ -3,10 +3,10 @@ public class PhysicalVolume extends Volume
     private int size;
     private String name;
 
-    public PhysicalVolume(int s, String n)
+    public PhysicalVolume(HardDrive sd, String n)
     {
         super();
-        size = s;
+        size = sd.getSize();
         name = n;
     }
 

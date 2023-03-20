@@ -1,12 +1,14 @@
 public class HardDrive extends Volume{
     private String name;
     private int size;
+    private String unit;
 
-    public HardDrive(String n, int s)
+    public HardDrive(String n, String s)
     {
         super();
         name = n;
-        size = s;
+        size = Integer.parseInt(s.substring(0, s.length()-1));
+        unit = s.substring(s.length()-1);
     }
 
     public int getSize() {
@@ -15,5 +17,10 @@ public class HardDrive extends Volume{
 
     public String getName() {
         return name;
+    }
+
+    public String toString()
+    {
+        return name + " [" + size + unit + "][" + getUuid().toString() + "]";
     }
 }

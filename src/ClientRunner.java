@@ -18,14 +18,18 @@ public class ClientRunner {
 
             if (inputList[0].equals("install-drive"))
             {
-                HardDrive sd = new HardDrive(inputList[1], inputList[2]);
-                for (HardDrive drive : sdList)
-                {
-                    if (drive.getName().equals(inputList[1]))
+                if (sdList.size() > 0) {
+                    for (HardDrive drive : sdList) {
+                        if (drive.getName().equals(inputList[1])) {
+                            System.out.println(inputList[1] + " creation failed");
+                        } else {
+                            HardDrive sd = new HardDrive(inputList[1], inputList[2]);
+                            sdList.add(sd);
+                            System.out.println("Drive " + sd.getName() + " installed");
+                            System.out.println(sd.toString());
+                        }
+                    }
                 }
-                sdList.add(sd);
-                System.out.println("Drive " + sd.getName() + " installed");
-                System.out.println(sd.toString());
             }
             if (inputList[0].equals("list-drives"))
             {

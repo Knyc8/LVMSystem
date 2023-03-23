@@ -18,24 +18,30 @@ public class ClientRunner {
 
             if (inputList[0].equals("install-drive"))
             {
+                boolean dupDrive = false;
                 if (sdList.size() > 0) {
-                    for (HardDrive drive : sdList) {
-                        if (drive.getName().equals(inputList[1])) {
-                            System.out.println(inputList[1] + " creation failed");
-                        } else {
-                            HardDrive sd = new HardDrive(inputList[1], inputList[2]);
-                            sdList.add(sd);
-                            System.out.println("Drive " + sd.getName() + " installed");
-                            System.out.println(sd.toString());
+                    for (int i = 0;  i < sdList.size(); i++) {
+                        if (sdList.get(i).getName().equals(inputList[1])) {
+                            dupDrive = true;
+                            System.out.println(inputList[1] + " creation failed.");
                         }
                     }
+                }
+                if (dupDrive == false)
+                {
+                    HardDrive sd = new HardDrive(inputList[1], inputList[2]);
+                    sdList.add(sd);System.out.println("Drive " + sd.getName() + " installed.");
                 }
             }
             if (inputList[0].equals("list-drives"))
             {
-                for (HardDrive drive : sdList)
-                {
-                    System.out.println(drive.toString());
+                if (sdList.size() == 0) {
+                    System.out.println("No drives installed currently.");
+                }
+                else {
+                    for (HardDrive drive : sdList) {
+                        System.out.println(drive.toString());
+                    }
                 }
             }
         }

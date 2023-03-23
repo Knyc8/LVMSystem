@@ -1,18 +1,19 @@
 import java.util.ArrayList;
 
 public class VolumeGroup extends Volume{
-    private ArrayList<PhysicalVolume> pvList;
+    private ArrayList<PhysicalVolume> group;
     private String name;
 
-    public VolumeGroup(String n)
+    public VolumeGroup(String n, PhysicalVolume pv)
     {
         super();
         name = n;
-        pvList = new ArrayList<>();
+        group = new ArrayList<>();
+        group.add(pv);
     }
 
     public ArrayList<PhysicalVolume> getPvList() {
-        return pvList;
+        return group;
     }
 
     public String getName() {

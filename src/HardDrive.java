@@ -19,6 +19,8 @@ public class HardDrive extends Volume{
         return name;
     }
 
+    public String getUnit() {return unit;}
+
     public String toString()
     {
         return name + " [" + size + unit + "][" + getUuid().toString() + "]";

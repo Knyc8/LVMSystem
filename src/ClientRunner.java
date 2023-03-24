@@ -109,7 +109,7 @@ public class ClientRunner {
                     }
                     if (assignedPv != null) {
                         volGroup.addToPVGroup(assignedPv);
-                        System.out.println(inputList[1] + " created.");
+                        System.out.println(inputList[2] + " added to " + inputList[1] + ".");
                     }
                 } else {
                     PhysicalVolume assignedPv = null;

@@ -20,6 +20,8 @@ public class PhysicalVolume extends Volume
         return name;
     }
 
+    public HardDrive getAssociatedDrive() { return associatedDrive; }
+
     public String toString()
     {
         return name + ": [" + size + associatedDrive.getUnit() + "] [" + getUuid().toString() + "]";
@@ -27,6 +29,6 @@ public class PhysicalVolume extends Volume
 
     public String toStringGroup(String vgName)
     {
-        return name + ": [" + size + associatedDrive.getUnit() + "] [" + vgName + "] [" + getUuid().toString() + "]";
+        return name + ": [" + size + associatedDrive.getUnit() + "] [" + vgName + "] [" + super.getUuid().toString() + "]";
     }
 }

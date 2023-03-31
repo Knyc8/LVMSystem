@@ -19,11 +19,11 @@ public class PhysicalVolume extends Volume
 
     public String toString()
     {
-        return super.getName() + ": [" + size + associatedDrive.getUnit() + "] [" + getUuid().toString() + "]";
+        return super.getName() + ": [" + size + "G] [" + getUuid().toString() + "]";
     }
 
     public String toStringGroup(String vgName)
     {
-        return super.getName() + ": [" + size + associatedDrive.getUnit() + "] [" + vgName + "] [" + super.getUuid().toString() + "]";
+        return super.getName() + ": [" + size + "G] [" + vgName + "] [" + super.getUuid().toString() + "]";
     }
 }

@@ -6,20 +6,20 @@ Parent class:
 Subclasses:
 - HardDrive
     - Inherits the UUID and name, and its corresponding methods
-    - Has an integer variable (size) and a String variable (unit)
-    - Getter methods returning size and unit
+    - Has an integer variable (size)
+    - Getter methods returning size
     - toString method returning the properly formatted display ( name [size] [UUID] )
 - PhysicalVolume
     - Inherits the UUID and name, and its corresponding methods
     - Has an integer variable (size) and an associated HardDrive object (associatedDrive)
     - Getter methods returning size and associatedDrive
     - toString method returning the properly formatted display ( name: [size] [UUID] )
-    - toStringGroup method that returns the toString format and also the VolumeGroup ( name: [size] [VolumeGroup] [UUID] )
+    - toStringGroup method that returns the toString format and also the VolumeGroup ( name: [size] [vg_name] [UUID] )
 - LogicalVolume
     - Inherits the UUID and name, and its corresponding methods
-    - Has an integer variable (size) and a String variable (unit)
-    - Getter methods returning size and unit
-    - toString method returning the properly formatted display ( name: [size] [VolumeGroup] [UUID] )
+    - Has an integer variable (size)
+    - Getter methods returning size
+    - toString method returning the properly formatted display ( name: [size] [vg_name] [UUID] )
 - VolumeGroup
     - Inherits the UUID and name, and its corresponding methods
     - Has a arraylist of PhysicalVolumes (pvGroup) and LogicalVolumes (lvGroup)
@@ -27,7 +27,7 @@ Subclasses:
     - Methods appending PhysicalVolumes and LogicalVolumes to pvGroup and lvGroup respectively
     - A method calculating the total space of the group (calcTotalSpace) and a method calculating the remaining space (calcRemainSpace)
     - Helper methods that creates a list of the names of the PhysicalVolumes (pvNameList)
-    - toString method returning the properly formatted display ( name: total: [calcTotalSpace] available: [calcRemainSpace] [pvNameList] [[UUID] )
+    - toString method returning the properly formatted display ( name: total: [calcTotalSpace] available: [calcRemainSpace] [pvNameList] [UUID] )
 
 Extra classes:
 - LVMLists

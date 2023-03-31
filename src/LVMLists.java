@@ -4,6 +4,7 @@ public class LVMLists {
     private static ArrayList<HardDrive> sdList = new ArrayList<>();
     private static ArrayList<PhysicalVolume> pvList = new ArrayList<>();
     private static ArrayList<VolumeGroup> vgList = new ArrayList<>();
+    private static ArrayList<LogicalVolume> lvList = new ArrayList<>();
 
     public static ArrayList<HardDrive> getSdList() {
         return sdList;
@@ -15,6 +16,9 @@ public class LVMLists {
 
     public static ArrayList<VolumeGroup> getVgList() {
         return vgList;
+    }
+    public static ArrayList<LogicalVolume> getLvList() {
+        return lvList;
     }
 
     public static void addToSDL(HardDrive sd)
@@ -30,6 +34,10 @@ public class LVMLists {
     public static void addToVGL(VolumeGroup vg)
     {
         vgList.add(vg);
+    }
+    public static void addToLVL(LogicalVolume lv)
+    {
+        lvList.add(lv);
     }
 
     public static Boolean sdExists(String n){
@@ -60,7 +68,14 @@ public class LVMLists {
         }
         return false;
     }
-    public static Boolean lvExists(String name){
+    public static Boolean lvExists(String n){
+        for (LogicalVolume lv : LVMLists.getLvList())
+        {
+            if (lv.getName().equals(n))
+            {
+                return true;
+            }
+        }
         return false;
     }
 }

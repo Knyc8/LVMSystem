@@ -147,6 +147,52 @@ public class ClientRunner {
                     }
                 }
             }
+            if (inputList[0].equals("lvcreate") && inputList.length == 4) {
+                if (LVMLists.getLvList().size() > 0) {
+                    if (LVMLists.lvExists(inputList[1])) {
+                        System.out.println(inputList[1] + " creation failed.");
+                    }
+                }
+                if (!LVMLists.lvExists(inputList[1])) {
+                    if (LVMLists.vgExists(inputList[3])) {
+                        boolean space = true;
+                        LogicalVolume lv = new LogicalVolume(inputList[1], inputList[2], inputList[3]);
+                        for (VolumeGroup vg : LVMLists.getVgList()) {
+                            if (vg.getName().equals(inputList[3])) {
+                                if (vg.calcRemainSpace() < Integer.parseInt(inputList[2].substring(0, inputList[2].length()-1)))
+                                {
+                                    space = false;
+                                }
+                                else {
+                                    vg.addToLVGroup(lv);
+                                }
+                            }
+                        }
+                        if (!space)
+                        {
+                            System.out.println(inputList[3] + " does not have enough space.");
+                        }
+                        else {
+                            LVMLists.addToLVL(lv);
+                            System.out.println((inputList[1] + inputList[2] + inputList[3]));
+                            System.out.println(inputList[1] + " created.");
+                        }
+                    } else {
+                        System.out.println(inputList[3] + " has not been created");
+                    }
+                }
+            }
+            if (inputList[0].equals("lvlist") && inputList.length == 1) {
+                {
+                    if (LVMLists.getLvList().size() == 0) {
+                        System.out.println("No logical volumes created currently.");
+                    } else {
+                        for (LogicalVolume lv : LVMLists.getLvList()) {
+                            System.out.println(lv);
+                        }
+                    }
+                }
+            }
         }
         System.out.println("Data saved.");
     }

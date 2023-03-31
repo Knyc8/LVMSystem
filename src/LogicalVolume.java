@@ -1,19 +1,15 @@
 public class LogicalVolume extends Volume
 {
-    private String name;
     private int size;
+    private String unit;
     public LogicalVolume(String n, String s)
     {
-        super();
-        name = n;
+        super(n);
         size = Integer.parseInt(s.substring(0, s.length()-1));
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getSize() {
         return size;
     }
+    public String getUnit() {return unit;}
 }

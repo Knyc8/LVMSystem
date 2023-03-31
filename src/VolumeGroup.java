@@ -3,12 +3,10 @@ import java.util.ArrayList;
 public class VolumeGroup extends Volume{
     private ArrayList<PhysicalVolume> pvGroup;
     private ArrayList<LogicalVolume> lvGroup;
-    private String name;
 
     public VolumeGroup(String n, PhysicalVolume pv)
     {
-        super();
-        name = n;
+        super(n);
         pvGroup = new ArrayList<>();
         pvGroup.add(pv);
         lvGroup = new ArrayList<>();
@@ -17,9 +15,8 @@ public class VolumeGroup extends Volume{
     public ArrayList<PhysicalVolume> getPvList() {
         return pvGroup;
     }
-
-    public String getName() {
-        return name;
+    public ArrayList<LogicalVolume> getLvList() {
+        return lvGroup;
     }
 
     public void addToPVGroup(PhysicalVolume pv)
@@ -63,6 +60,6 @@ public class VolumeGroup extends Volume{
     }
     public String toString()
     {
-        return name + ": Total:[" + calcTotalSpace() + "] Available:[" + calcRemainSpace() + "] " + pvNameList().toString() + " [" + super.getUuid().toString() + "]";
+        return super.getName() + ": Total:[" + calcTotalSpace() + "] Available:[" + calcRemainSpace() + "] " + pvNameList().toString() + " [" + super.getUuid().toString() + "]";
     }
 }

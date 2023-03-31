@@ -31,4 +31,36 @@ public class LVMLists {
     {
         vgList.add(vg);
     }
+
+    public static Boolean sdExists(String n){
+        for (int i = 0; i < sdList.size(); i++) {
+            if (sdList.get(i).getName().equals(n)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static Boolean pvExists(String n1, String n2){
+        for (PhysicalVolume pv : pvList)
+        {
+            if (pv.getName().equals(n1) || pv.getAssociatedDrive().getName().equals(n2))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static Boolean vgExists(String n){
+        for (VolumeGroup vg : LVMLists.getVgList())
+        {
+            if (vg.getName().equals(n))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static Boolean lvExists(String name){
+        return false;
+    }
 }

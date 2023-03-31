@@ -60,6 +60,6 @@ public class VolumeGroup extends Volume{
     }
     public String toString()
     {
-        return super.getName() + ": Total:[" + calcTotalSpace() + "] Available:[" + calcRemainSpace() + "] " + pvNameList().toString() + " [" + super.getUuid().toString() + "]";
+        return super.getName() + ": Total:[" + calcTotalSpace() + "G] Available:[" + calcRemainSpace() + "G] " + pvNameList().toString() + " [" + super.getUuid().toString() + "]";
     }
 }

@@ -14,16 +14,13 @@ public class ClientRunner {
             input = s.nextLine();
             String[] inputList = input.split(" ");
             if (inputList[0].equals("install-drive") && inputList.length == 3) {
-                boolean dupDrive = false;
                 if (LVMLists.getSdList().size() > 0) {
-                    for (int i = 0; i < LVMLists.getSdList().size(); i++) {
-                        if (LVMLists.getSdList().get(i).getName().equals(inputList[1])) {
-                            dupDrive = true;
-                            System.out.println(inputList[1] + " creation failed.");
-                        }
+                    if (LVMLists.sdExists(inputList[1]))
+                    {
+                        System.out.println(inputList[1] + " creation failed.");
                     }
                 }
-                if (dupDrive == false) {
+                if (!LVMLists.sdExists(inputList[1])) {
                     HardDrive sd = new HardDrive(inputList[1], inputList[2]);
                     LVMLists.addToSDL(sd);
                     System.out.println("Drive " + sd.getName() + " installed.");
@@ -39,16 +36,8 @@ public class ClientRunner {
                 }
             }
             if (inputList[0].equals("pvcreate") && inputList.length == 3) {
-                boolean alrExist = false;
-                for (PhysicalVolume pv : LVMLists.getPvList())
-                {
-                    if (pv.getName().equals(inputList[1]) || pv.getAssociatedDrive().getName().equals(inputList[2]))
-                    {
-                        alrExist = true;
-                        break;
-                    }
-                }
-                if (alrExist) {System.out.println(inputList[1] + " creation failed.");}
+                if (LVMLists.pvExists(inputList[1], inputList[2]))
+                {System.out.println(inputList[1] + " creation failed.");}
                 else {
                     HardDrive associated = null;
                     for (HardDrive sd : LVMLists.getSdList()) {
@@ -70,47 +59,42 @@ public class ClientRunner {
                     System.out.println("No physical volumes created currently.");
                 } else {
                     for (PhysicalVolume pv : LVMLists.getPvList()) {
-                        if (LVMLists.getVgList().size() > 0) {
-                            for (VolumeGroup vg : LVMLists.getVgList()) {
-                                for (PhysicalVolume pv1 : vg.getPvList()) {
-                                    if (pv.getName().equals(pv1.getName())) {
-                                        System.out.println(pv.toStringGroup(vg.getName()));
-                                    }
-                                    else {
-                                        System.out.println(pv);
-                                    }
+                        boolean inAGroup = false;
+                        String groupName = "";
+                        for (VolumeGroup vg : LVMLists.getVgList()) {
+                            for (PhysicalVolume pv1 : vg.getPvList()) {
+                                if (pv.getName().equals(pv1.getName())) {
+                                    inAGroup = true;
+                                    groupName = vg.getName();
                                 }
                             }
-                        } else {
+                        }
+                        if (inAGroup)
+                        {
+                            System.out.println(pv.toStringGroup(groupName));
+                        }
+                        else
+                        {
                             System.out.println(pv);
                         }
                     }
                 }
             }
             if (inputList[0].equals("vgcreate") && inputList.length == 3) {
-                VolumeGroup volGroup = null;
-                for (VolumeGroup vg : LVMLists.getVgList())
-                {
-                    if (vg.getName().equals(inputList[1]))
-                    {
-                        volGroup = vg;
-                        break;
-                    }
-                }
-
-                if (LVMLists.getPvList().size() == 0) {
-                    System.out.println(inputList[1] + " creation failed.");
-                }else if (volGroup != null){
-                    PhysicalVolume assignedPv = null;
-                    for (PhysicalVolume pv : LVMLists.getPvList()) {
-                        if (pv.getName().equals(inputList[2])) {
-                            assignedPv = pv;
+                boolean inAGroup = false;
+                for (VolumeGroup vg : LVMLists.getVgList()) {
+                    for (PhysicalVolume pv1 : vg.getPvList()) {
+                        if (inputList[2].equals(pv1.getName())) {
+                            inAGroup = true;
                         }
                     }
-                    if (assignedPv != null) {
-                        volGroup.addToPVGroup(assignedPv);
-                        System.out.println(inputList[2] + " added to " + inputList[1] + ".");
-                    }
+                }
+                if (inAGroup)
+                {
+                    System.out.println(inputList[2] + " already exists in another group.");
+                }
+                else if (LVMLists.getPvList().size() == 0 || LVMLists.vgExists(inputList[1])) {
+                    System.out.println(inputList[1] + " creation failed.");
                 } else {
                     PhysicalVolume assignedPv = null;
                     for (PhysicalVolume pv : LVMLists.getPvList()) {
@@ -123,6 +107,32 @@ public class ClientRunner {
                         LVMLists.addToVGL(vg);
                         System.out.println(inputList[1] + " created.");
                     }
+                }
+            }
+            if (inputList[0].equals("vgextend") && inputList.length == 3) {
+                if (!LVMLists.vgExists(inputList[1]))
+                {
+                    System.out.println(inputList[1] + " has not been created");
+                }
+                else if (!LVMLists.pvExists(inputList[2], ""))
+                {
+                    System.out.println(inputList[2] + " has not been created");
+                }
+                else {
+                    PhysicalVolume assignedPv = null;
+                    for (PhysicalVolume pv : LVMLists.getPvList()) {
+                        if (pv.getName().equals(inputList[2])) {
+                            assignedPv = pv;
+                        }
+                    }
+                    VolumeGroup assignedVg = null;
+                    for (VolumeGroup vg : LVMLists.getVgList()) {
+                        if (vg.getName().equals(inputList[1])) {
+                            assignedVg = vg;
+                        }
+                    }
+                    assignedVg.addToPVGroup(assignedPv);
+                    System.out.println("Successfully appended " + inputList[2] + " to " + inputList[1]);
                 }
             }
             if (inputList[0].equals("vglist") && inputList.length == 1) {

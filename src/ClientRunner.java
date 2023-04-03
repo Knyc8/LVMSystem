@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class ClientRunner {
     public static void main(String[] args) throws IOException {
-        //load saved objects
+        //load saved objects (Can write multiple objects to Save_File but can only load one at the moment)
+
         HardDrive loaded = (HardDrive) LVMLoad.load();
         LVMLists.addToSDL(loaded);
         System.out.println("Data loaded.");

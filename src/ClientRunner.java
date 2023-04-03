@@ -1,14 +1,18 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ClientRunner {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        //load saved objects
+        HardDrive loaded = (HardDrive) LVMLoad.load();
+        LVMLists.addToSDL(loaded);
+        System.out.println("Data loaded.");
+
         Scanner s = new Scanner(System.in);
 
-        System.out.println("Data loaded.");
         System.out.println("Welcome to the LVM system.");
         String input = "";
-
         while (!input.equals("exit")) {
             System.out.print("cmd#: ");
             input = s.nextLine();
@@ -23,6 +27,7 @@ public class ClientRunner {
                 if (!LVMLists.sdExists(inputList[1])) {
                     HardDrive sd = new HardDrive(inputList[1], inputList[2]);
                     LVMLists.addToSDL(sd);
+                    LVMLoad.save(sd);
                     System.out.println("Drive " + sd.getName() + " installed.");
                 }
             }

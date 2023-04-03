@@ -1,6 +1,7 @@
 import java.util.UUID;
+import java.io.Serializable;
 
-public class Volume {
+public class Volume implements Serializable{
     private UUID uuid;
     private String name;
 
